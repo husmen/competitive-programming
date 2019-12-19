@@ -2,19 +2,16 @@
 # print("this is a debug message")
 def solution(U, L, C):
     # write your code in Python 3.6
-    sol_found = False
     u_row, l_row = None, None
     N, S = len(C), sum(C)
 
-    possible = True if (S == U + L and 0 <= U <= N and 0 <= L <= N) else False
-    if(possible):
+    if(not (S == U + L and 0 <= U <= N and 0 <= L <= N)):
+        return "IMPOSSIBLE"
+    else:
         # get initial values shared between both rows
         tmp = [1 if x == 2 else (0 if x == 0 else None) for i, x in enumerate(C)]
-
-        # get sum and diffs so far
         tmp_sum = sum([_ for _ in tmp if _ is not None])
-        u_diff = U - tmp_sum
-        l_diff = L - tmp_sum
+        u_diff, l_diff = U - tmp_sum, L - tmp_sum
 
         # get all values of first row
         if u_diff > 0:
@@ -33,12 +30,7 @@ def solution(U, L, C):
         else:
             l_row = [0 if x is None else x for x in tmp] 
 
-        sol_found = True
-
-    if sol_found:
         return "".join([str(_) for _ in u_row]) + "," + "".join([str(_) for _ in l_row])
-    else:
-        return "IMPOSSIBLE"
 
 if __name__ == "__main__":
     tests = []
